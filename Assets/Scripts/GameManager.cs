@@ -13,14 +13,19 @@ public class GameManager : MonoBehaviour
     public bool isGameOver = false;
     public bool isGameStarted = false;
 
+    private bool isPaused = false;
+
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI healthText;
+
     public GameObject gameOverText;
     public GameObject startPanel;
+    public GameObject pausePanel;
 
     private void Awake()
     {
         Instance = this;
+        Time.timeScale = 1f;
     }
 
     private void Start()
@@ -39,6 +44,11 @@ public class GameManager : MonoBehaviour
         {
             startPanel.SetActive(true);
         }
+
+        if (pausePanel != null)
+        {
+            pausePanel.SetActive(false);
+        }
     }
 
     private void Update()
@@ -47,21 +57,33 @@ public class GameManager : MonoBehaviour
         {
             RestartGame();
         }
+
+        if (isGameStarted && !isGameOver && Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
     }
 
     public void StartGame()
     {
         isGameStarted = true;
+        isPaused = false;
+        Time.timeScale = 1f;
 
         if (startPanel != null)
         {
             startPanel.SetActive(false);
         }
+
+        if (pausePanel != null)
+        {
+            pausePanel.SetActive(false);
+        }
     }
 
     public void AddScore(int value)
     {
-        if (isGameOver || !isGameStarted) return;
+        if (isGameOver || !isGameStarted || isPaused) return;
 
         score += value;
         UpdateScoreUI();
@@ -69,7 +91,7 @@ public class GameManager : MonoBehaviour
 
     public void TakeDamage(int value)
     {
-        if (isGameOver || !isGameStarted) return;
+        if (isGameOver || !isGameStarted || isPaused) return;
 
         health -= value;
 
@@ -88,7 +110,7 @@ public class GameManager : MonoBehaviour
 
     public void Heal(int value)
     {
-        if (isGameOver || !isGameStarted) return;
+        if (isGameOver || !isGameStarted || isPaused) return;
 
         health += value;
 
@@ -103,18 +125,68 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         isGameOver = true;
+        isPaused = false;
+        Time.timeScale = 1f;
 
         if (gameOverText != null)
         {
             gameOverText.SetActive(true);
         }
+
+        if (pausePanel != null)
+        {
+            pausePanel.SetActive(false);
+        }
+    }
+
+    public void TogglePause()
+    {
+        if (isPaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
+
+    public void PauseGame()
+    {
+        if (isGameOver || !isGameStarted) return;
+
+        isPaused = true;
+        Time.timeScale = 0f;
+
+        if (pausePanel != null)
+        {
+            pausePanel.SetActive(true);
+        }
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+
+        if (pausePanel != null)
+        {
+            pausePanel.SetActive(false);
+        }
     }
 
     public void RestartGame()
     {
+        Time.timeScale = 1f;
+
         SceneManager.LoadScene(
             SceneManager.GetActiveScene().buildIndex
         );
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     private void UpdateScoreUI()
