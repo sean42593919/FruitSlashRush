@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
 
     private bool isPaused = false;
 
+    public GameObject levelUpText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI levelText;
     public TextMeshProUGUI leaderboardText;
 
     public Image heart1;
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject pausePanel;
     public GameObject leaderboardPanel;
 
+    private int currentLevel = 1;
     private const int LeaderboardSize = 5;
 
     private void Awake()
@@ -41,8 +44,13 @@ public class GameManager : MonoBehaviour
         health = maxHealth;
 
         UpdateScoreUI();
+        UpdateLevelUI();
         UpdateHealthUI();
 
+        currentLevel = GetCurrentLevel();
+
+        if (levelUpText != null)
+            levelUpText.SetActive(false);
         if (gameOverText != null) gameOverText.SetActive(false);
         if (startPanel != null) startPanel.SetActive(true);
         if (pausePanel != null) pausePanel.SetActive(false);
@@ -79,6 +87,7 @@ public class GameManager : MonoBehaviour
 
         score += value;
         UpdateScoreUI();
+        UpdateLevelUI();
     }
 
     public void TakeDamage(int value)
@@ -248,5 +257,40 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(
             SceneManager.GetActiveScene().buildIndex
         );
+    }
+
+    private void UpdateLevelUI()
+    {
+        int newLevel = GetCurrentLevel();
+
+        if (levelText != null)
+            levelText.text = "Level : " + newLevel;
+
+        if (newLevel > currentLevel)
+        {
+            currentLevel = newLevel;
+            ShowLevelUp();
+        }
+    }
+
+    private int GetCurrentLevel()
+    {
+        return score / 50 + 1;
+    }
+
+    private void ShowLevelUp()
+    {
+        if (levelUpText != null)
+        {
+            levelUpText.SetActive(true);
+            CancelInvoke(nameof(HideLevelUp));
+            Invoke(nameof(HideLevelUp), 1f);
+        }
+    }
+
+    private void HideLevelUp()
+    {
+        if (levelUpText != null)
+            levelUpText.SetActive(false);
     }
 }
