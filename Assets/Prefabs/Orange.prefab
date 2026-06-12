@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3838037162307797077}
   - component: {fileID: 157651280343043709}
   - component: {fileID: -5779891096938133541}
+  - component: {fileID: 7316478908866208469}
   m_Layer: 0
   m_Name: Orange
   m_TagString: Untagged
@@ -170,3 +171,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fruit
   scoreValue: 3
+--- !u!114 &7316478908866208469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5465747844294592656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7beda020a5eca15488cb4e8f61a0e391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Rotator
