@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -16,8 +17,11 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false;
 
     public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI healthText;
     public TextMeshProUGUI leaderboardText;
+
+    public Image heart1;
+    public Image heart2;
+    public Image heart3;
 
     public GameObject gameOverText;
     public GameObject startPanel;
@@ -181,7 +185,9 @@ public class GameManager : MonoBehaviour
 
     private void UpdateHealthUI()
     {
-        healthText.text = "HP: " + health;
+        if (heart1 != null) heart1.enabled = health >= 1;
+        if (heart2 != null) heart2.enabled = health >= 2;
+        if (heart3 != null) heart3.enabled = health >= 3;
     }
 
     private void SaveScoreToLeaderboard(int newScore)
