@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FruitSpawner : MonoBehaviour
 {
-    public GameObject applePrefab;
+    public GameObject[] fruitPrefabs;
     public GameObject bombPrefab;
 
     public float spawnInterval = 1.2f;
@@ -20,10 +20,19 @@ public class FruitSpawner : MonoBehaviour
         float x = Random.Range(-6f, 6f);
         Vector3 spawnPosition = new Vector3(x, -5f, 0f);
 
-        GameObject prefabToSpawn =
-            Random.value < 0.2f
-            ? bombPrefab
-            : applePrefab;
+        GameObject prefabToSpawn;
+
+        if (Random.value < 0.2f)
+        {
+            prefabToSpawn = bombPrefab;
+        }
+        else
+        {
+            prefabToSpawn =
+                fruitPrefabs[
+                    Random.Range(0, fruitPrefabs.Length)
+                ];
+        }
 
         GameObject obj =
             Instantiate(
