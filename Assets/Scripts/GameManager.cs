@@ -240,4 +240,13 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.PlayButtonClick();
         }
     }
+
+    public void ReturnToMainMenu()
+    {
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().buildIndex
+        );
+    }
 }
