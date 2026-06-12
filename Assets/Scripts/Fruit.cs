@@ -8,6 +8,7 @@ public class Fruit : MonoBehaviour
     {
         if (other.CompareTag("Blade"))
         {
+            AudioManager.Instance.PlayFruitSlice();
             GameManager.Instance.AddScore(scoreValue);
             Destroy(gameObject);
         }

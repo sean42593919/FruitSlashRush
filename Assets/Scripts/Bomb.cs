@@ -6,6 +6,7 @@ public class Bomb : MonoBehaviour
     {
         if (other.CompareTag("Blade"))
         {
+            AudioManager.Instance.PlayBomb();
             GameManager.Instance.TakeDamage(1);
             Destroy(gameObject);
         }

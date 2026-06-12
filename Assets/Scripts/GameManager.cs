@@ -118,6 +118,12 @@ public class GameManager : MonoBehaviour
 
         SaveScoreToLeaderboard(score);
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopBGM();
+            AudioManager.Instance.PlayGameOver();
+        }
+
         if (gameOverText != null) gameOverText.SetActive(true);
         if (pausePanel != null) pausePanel.SetActive(false);
         if (leaderboardPanel != null) leaderboardPanel.SetActive(false);
@@ -225,5 +231,13 @@ public class GameManager : MonoBehaviour
         }
 
         leaderboardText.text = text;
+    }
+
+    public void PlayButtonSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
     }
 }

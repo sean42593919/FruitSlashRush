@@ -6,6 +6,7 @@ public class Heart : MonoBehaviour
     {
         if (other.CompareTag("Blade"))
         {
+            AudioManager.Instance.PlayHeal();
             GameManager.Instance.Heal(1);
             Destroy(gameObject);
         }
