@@ -24,13 +24,13 @@ public class AudioManager : MonoBehaviour
 
         bgmSource.clip = backgroundMusic;
         bgmSource.loop = true;
-        bgmSource.volume = 0.3f;
+        bgmSource.volume = 0.2f;
         bgmSource.Play();
     }
 
     public void PlayFruitSlice()
     {
-        audioSource.PlayOneShot(fruitSliceSound);
+        audioSource.PlayOneShot(fruitSliceSound,0.5f);
     }
 
     public void PlayBomb()
